@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreenanzApp | Authentication</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: linear-gradient(#084a9f 50%, #2293f6);
+            }
+
+        .welcome{
+            padding: 6rem 0;
+            font-size: 3rem;
+        }
+        .logo-image{
+            width: 120px;
+        }
+
+        .logo-icon {
+        font-size: 40px;
+        color: #2962FF;
+        }
+
+        .logo-text {
+        font-size: 42px;
+        padding-bottom: 2rem;
+        }
+
+        .free { color: #00C853; font-weight: 600; }
+        .nanz { color: #cfdcff; font-weight: 600; }
+        .app { color: #e95665; font-weight: 600; }
+        
+        .design-image {
+            color: white;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            padding: 90px 20px;
+            height: 100%;
+        }
+
+        .authentication-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 10px;
+            height: 100%; 
+        }
+
+        .register-card {
+            height: 85vh;
+            width: 80%;
+            background-color: #fff;
+            border-radius: 20px;
+            padding: 3rem 1rem;
+            }
+
+        .form-control {
+            height: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-select {
+            height: 3rem;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+</head>
+<body>
+    <div class="container-fluid h-100">
+        <div class="row h-100 flex-md-row">
+            <div class="col-12 col-md-6 design-image">
+                <div>
+                    <h2 class="welcome">Bienvenido a</h2>
+                    <img class="logo-image" src="{% static 'images/logo.png' %}" alt="FreenanzApp Logo">
+                    <div class="logo">
+                        <div class="logo-text">
+                          <span class="free">Free</span><span class="nanz">nanz</span><span class="app">App</span>
+                        </div>
+                    </div>
+                    <p style="font-family: 'Lato', sans-serif; color: #d3d3d3; font-size: 28px; margin-top: 10px;">
+                        Toma el control. Vive libre.<br>Administra tus finanzas con FreenanzApp.
+                    </p>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 authentication-container">
+                {% block form %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+</body>
+</html>

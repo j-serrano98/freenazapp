@@ -1,0 +1,477 @@
+{% extends 'core/layout.html' %}
+
+{% load static %}
+
+{% block content %}
+    <style>
+        .card-generics {
+            border-radius: 20px;
+        }
+
+        .sm-card {
+            width: 23%;
+        }
+
+        .md-card {
+            width: 35%;
+        }
+        
+        .lg-card {
+            width: 62%;
+        }
+
+        .decimal-value {
+            color:rgba(0, 0, 0, 0.25);
+        }
+
+        .card-title,
+        .balance {
+            font-weight: bold;
+        }
+        
+        .balance-comparison {
+            margin-top: 1rem;
+            align-items: center;
+            font-weight: 600;
+            font-size: small;
+        }
+
+        .percentage-variation {
+            background-color: #e1fbe0;
+            color: #659170;
+            padding: 1px 8px;
+            border-radius: 12px;
+            align-items: center;
+        }
+
+        .comparison-period {
+            color: rgba(0, 0, 0, 0.35);
+            font-weight: 700;
+        }
+
+        table {
+            font-size: 0.8rem;     
+        }
+
+        #transactions {
+            height: 80%;
+        }
+
+        #transactions th {
+            color: rgb(8, 74, 159);
+            background-color: rgba(5, 113, 255, 0.082);
+        }
+        
+        #transactions th:last-child {
+            border-radius: 0 20px 20px 0;
+        }
+
+        #transactions th:first-child{
+            border-radius: 20px 0 0 20px;
+            padding-left: 1rem;
+        }
+
+        #transactions td.amount-column{
+            text-align: end;
+            padding-right: 2rem;
+        }
+
+        #transactions td.payment-column{
+            padding-left: 0.5rem;
+        }
+
+        #transactions td{
+            justify-content: center;
+            vertical-align: middle;
+            padding: 0;
+            border-bottom: solid 1px rgba(5, 113, 255, 0.082);
+        }
+
+        .transactions-cell {
+            border-spacing: 28px 28px;
+        }
+
+        #transactions img {
+            width: 16px;
+        }
+
+        #moneyFlowChart {
+            height: 255px;
+            width: 500px;
+            margin: auto;
+        }
+
+        #budgetChart {
+            width: 100%;
+            height: 200px;
+            display: block;
+        } 
+
+
+        /* Goal widget */
+        .progress {
+            height: 25px;
+            border-radius: 20px;
+            background-color: rgba(5, 113, 255, 0.082);
+            /* overflow: hidden;    */
+        }
+        
+        .progress-bar {
+            /* padding-right: 10px; */
+            border-radius: 20px;
+            background-color: #084a9f;
+        }
+
+        .goal-element {
+            margin-top: 0.7rem;
+        }
+
+        .goal-description {
+            font-weight: 600;
+        }
+
+        .goal-amount {
+            color: #08499fa2;
+        }
+    </style>
+    <div class="ms-4 mt-4">
+        <h2 id="user-greeting"><span id="user-name">Josue</span>!</h2>
+        <!-- <span>Es la mejor hora para administrar tus finanzas</span> -->
+    
+        <div class="d-flex row gap-3">
+                
+                
+            <!-- CARDS -->
+            <div class="d-flex row mt-2 justify-content-between">
+                     <div class="card card-generics sm-card">
+                         <div class="card-body">
+                             <h6 class="card-title pb-2">Total balance</h6>
+                             <h4 class="ms-auto balance">$23,826<span class="decimal-value">.76</span></h4>
+                             <div class="balance-comparison d-flex flex-row gap-2">
+                                 <div class="percentage-variation">
+                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+                                         <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"/>
+                                     </svg> 
+                                     12.1%
+                                 </div>
+                                 <div class="comparison-period">
+                                     vs last month
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="card card-generics sm-card">
+                         <div class="card-body">
+                             <h6 class="card-title pb-2">Income</h6>
+                             <h4 class="ms-auto balance">$11,917<span class="decimal-value">.24</span></h4>
+                             <div class="balance-comparison d-flex flex-row gap-2">
+                                 <div class="percentage-variation">
+                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+                                         <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1"/>
+                                     </svg> 
+                                     4.4%
+                                 </div>
+                                 <div class="comparison-period">
+                                     vs last month
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="card card-generics sm-card">
+                         <div class="card-body">
+                             <h6 class="card-title pb-2">Expense</h6>
+                             <h4 class="ms-auto balance">$7,936<span class="decimal-value">.71</span></h4>
+                             <div class="balance-comparison d-flex flex-row gap-2">
+                                 <div class="percentage-variation" style="color: #ce8181; background-color: #fdeded;">
+                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+                                         <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"/>
+                                     </svg> 
+                                     2.4%
+                                 </div>
+                                 <div class="comparison-period">
+                                     vs last month
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="card card-generics sm-card">
+                         <div class="card-body">
+                             <h6 class="card-title pb-2">Total Savings</h6>
+                             <h4 class="ms-auto balance">$74,913<span class="decimal-value">.49</span></h4>
+                             <div class="balance-comparison d-flex flex-row gap-2">
+                                 <div class="percentage-variation">
+                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+                                         <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"/>
+                                     </svg> 
+                                     7.6%
+                                 </div>
+                                 <div class="comparison-period">
+                                     vs last month
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+            </div>
+
+            <!-- CHARTS -->
+            <div class="d-flex row mt-2 justify-content-between">
+                <div class="card card-generics lg-card ">
+                    <div class="card-body">
+                        <h6 class="card-title">Money Flow</h6>
+                        <div>
+                            <canvas id="moneyFlowChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                     
+                     
+                     
+                <div class="card card-generics md-card justify-content-center">
+                    <div class="card-body">
+                        <h6 class="card-title pb-2">Budget</h6>
+                        <div>
+                            <canvas id="budgetChart" width="300" height="200"></canvas>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+
+
+            <!-- TRANSACTIONS AND GOALS -->
+            <div class="d-flex row mt-2 justify-content-between">
+                <!-- RECENT TRANSACTIONS -->
+                <div class="card card-generics lg-card">
+                    <div class="card-body">
+                        <h6 class="card-title pb-2">Recent Transactions</h6>
+                        <table class="table table-borderless mb-0" id="transactions">
+                                <thead class="transaction-table-header">
+                                    <tr>
+                                        <th scope="col">DATE</th>
+                                        <th scope="col">AMOUNT</th>
+                                        <th scope="col">PAYMENT NAME</th>
+                                        <th scope="col">METHOD</th>
+                                        <th scope="col">CATEGORY</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td scope="row">07/05/25</td>
+                                        <td class="amount-column">-$10</td>
+                                        <td class="payment-column">
+                                            <img src="{% static 'images/youtube-logo.png' %}" alt="youtube-logo">
+                                            YouTube
+                                        </td>
+                                        <td>VISA **7392</td>
+                                        <td>Subscription</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">04/04/25</td>
+                                        <td class="amount-column">-$1125</td>
+                                        <td class="payment-column">
+                                            <img src="{% static 'images/altice-logo.png' %}" alt="altice-logo">
+                                            Altice
+                                        </td>
+                                        <td>Mastercard **9102</td>
+                                        <td>Subscription</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">04/04/25</td>
+                                        <td class="amount-column">-$1750</td>
+                                        <td class="payment-column">
+                                            <img src="{% static 'images/yokomo-logo.png' %}" alt="yokomo-logo">
+                                            Yokomo
+                                        </td>
+                                        <td>Cash</td>
+                                        <td>Cafe & Restaurants</td>
+                                    </tr>
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- SAVING GOALS -->
+                <div class="card card-generics md-card">
+                    <div class="card-body">
+                        <h6 class="card-title pb-2">Saving goals</h6>
+                        <div class="goal-element">
+                            <div class="goal-description d-flex justify-content-between mb-1">
+                                <span class="goal-item">MacBook Pro</span>
+                                <span class="goal-amount">$71,650</span>
+                            </div>
+                            <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar" style="width: 65%">65%</div>
+                            </div>
+                        </div>
+                        <div class="goal-element">
+                            <div class="goal-description d-flex justify-content-between mb-1">
+                                <span class="goal-item">Mi Honda Fit</span>
+                                <span class="goal-amount">$720,000</span>
+                            </div>
+                            <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar" style="width: 42%">42%</div>
+                            </div>
+                        </div>
+                        <div class="goal-element">
+                            <div class="goal-description d-flex justify-content-between mb-1">
+                                <span class="goal-item">Mi Casita</span>
+                                <span class="goal-amount">$3,560,000</span>
+                            </div>
+                            <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar" style="width: 83%">83%</div>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+            </div>            
+        
+        </div>
+    </div>
+    <script>
+        const userGreeting = document.getElementById("user-greeting");
+        const userName = document.getElementById("user-name");
+        
+        const d = new Date();
+        let hour = d.getHours();
+
+        if (hour >= 5 && hour <= 11){
+            userGreeting.textContent = `Buenos dias, ${userName.textContent}!`;
+        } else if (hour >= 12 && hour < 18){
+            userGreeting.textContent = `Buenas tardes, ${userName.textContent}!`;
+        } else {
+            userGreeting.textContent = `Buenas noches, ${userName.textContent}!`
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+      // Get canvas element
+      const ctx = document.getElementById('moneyFlowChart').getContext('2d');
+
+      const generateRandom = (min, max) => 
+        (Math.random() * (max - min) + min).toFixed(2);
+    
+      // Define data
+      const data = {
+        labels: ['Mar', 'Feb', 'Jan', 'Dec', 'Nov', 'Oct', 'Sep', 'Aug', 'Jul', 'Jun', 'May', 'Apr']
+        ,
+        datasets: [
+          {
+            label: 'Incomes',
+            data: [115955.93, 119386.78, 116320.86, 119215.88, 114552.0, 108148.51, 107049.58, 109640.24, 102966.59, 112171.44, 109484.44, 103445.36],
+            backgroundColor: 'rgb(8, 74, 159)',
+            borderRadius: 25,
+            borderSkipped: false
+          },
+          {
+            label: 'Outcomes',
+            data: [74010.85, 70432.32, 67514.37, 73422.8, 58802.01, 52954.62, 68142.3, 58936.17, 64946.5, 53863.65, 52811.58, 71364.8],
+            backgroundColor: 'rgb(233, 86, 101)',
+            borderRadius: 25,
+            borderSkipped: false
+          },
+        ]
+      };
+    
+      // Initialize chart
+      new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+          responsive: false,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    </script>
+
+    <script>
+        const budgetCtx = document.getElementById('budgetChart').getContext('2d');
+
+        const budgetData = {
+        labels: [
+            'Cafe & Restaurants',
+            'Entertainment',
+            'Investments',
+            'Food & Groceries',
+            'Health & Beauty',
+            'Traveling'
+        ],
+        datasets: [
+            {
+            label: 'Monthly Expenses',
+            data: [150, 100, 200, 250, 80, 120],
+            backgroundColor: [
+                '#084a9f',  // Investments — deep blue
+                '#05336b',  // Cafe & Restaurants — red
+                '#0a62d1',  // Entertainment — green
+                '#1a5380',  // Food & Groceries — warm yellow
+                '#03244f',  // Health & Beauty — soft purple
+                '#3379c2'   // Traveling — cyan
+            ],
+            hoverOffset: 4
+            }
+        ]
+        };
+
+
+
+        const centerText = {
+            id: 'centerText',
+            beforeDraw(chart) {
+                const { width, height } = chart;
+                const ctx = chart.ctx;
+                ctx.save();
+
+                const total = chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                ctx.textAlign = 'center'
+                ctx.textBaseline = 'middle';
+                
+                ctx.font = 'bold 14px Arial';
+                ctx.fillStyle = '#bfbfbf';
+                ctx.fillText('Total for month', width / 2, height / 2.8 - 12);
+                
+                ctx.font = 'bold 28px Arial';
+                ctx.fillStyle = '#1d1d1d';
+                ctx.fillText(`$${total.toLocaleString()}`, width / 2, height / 2.8 + 12);
+
+                ctx.restore();
+            }
+        };
+
+        // Initialize chart
+        new Chart(budgetCtx, {
+        type: 'doughnut',
+        data: budgetData,
+        options: {
+            responsive: true,
+            maintainAspectRation: false,
+            layout: {
+                padding: 0
+            },
+            cutout: '80%',
+            borderRadius: 10,
+            borderWidth: 2,
+            borderColor: '#fff',
+            plugins: {
+            legend: {
+                position: 'bottom',
+                labels: {
+                boxWidth: 16,
+                color: '#333',
+                font: {
+                    size: 14,
+                    family: 'Arial'
+                }
+                }
+            }
+            }
+        },
+        plugins: [centerText]
+        });
+
+    </script>
+{% endblock %}

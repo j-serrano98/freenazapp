@@ -1,0 +1,47 @@
+{% extends  'users/authentication_layout.html' %}
+
+{% block form %}
+    <div class="card register-card">
+      <div class="card-body">
+        <h2 class="card-title" style="font-weight: 600; color: #084a9f; font-size: 2.7rem; padding-bottom: 1rem;">Log In</h2>
+        <form class="register-form" method="post" action="{% url 'users:login' %}">
+            {% csrf_token %}
+
+            {% if form.errors %}
+                <div class="alert alert-danger" role="alert" style="position: relative;">
+                    <strong>Login failed!</strong>
+                    <ul>
+                        {% for field, errors in form.errors.items %}
+                            {% for error in errors %}
+                                <li>
+                                    {% if field == '__all__' %}
+                                        {{ error }}
+                                    {% else %}
+                                        {{ field|capfirst }}: {{ error }}
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="mb-3" style="margin-top: 2rem;">
+            {% else%}
+                <div class="mb-3" style="margin-top: 7rem;">
+            {% endif %}
+            
+                <input type="text" name="username" class="form-control" id="id_username" placeholder="Username" required>
+            </div>
+            <div class="mb-3">
+                <input type="password" name="password" class="form-control" id="id_password1" placeholder="Password" required>
+                <small class="form-text text-muted">Forgot your password?</small>
+            </div>
+            <div class="row justify-content-center pt-4 mb-3 ">
+                <button type="submit" class="btn btn-primary btn-lg col-md-6">Login</button>
+            </div>
+            <div class="mt-4 d-flex justify-content-end w-30">
+                <p>Does not have an account? <a href="{% url 'users:register' %}">Sign Up</a></p>
+            </div>
+        </form>
+      </div>
+    </div>
+{% endblock %}

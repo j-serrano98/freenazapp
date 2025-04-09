@@ -1,0 +1,514 @@
+{% extends 'core/layout.html' %}
+
+{% load static %}
+
+{% block content %}
+    <style>
+
+        table {
+            font-size: 0.8rem;  
+        }
+
+        #transactions-container {
+            /* height: 90vh; */
+            overflow-y: scroll;
+            
+
+        }
+
+
+        #transactions {
+            height: 80%;
+        }
+
+        #transactions th {
+            color: rgb(8, 74, 159);
+            background-color: rgba(5, 113, 255, 0.082);
+        }
+        
+        #transactions th:last-child {
+            border-radius: 0 17px 17px 0;
+        }
+
+        #transactions th:first-child{
+            border-radius: 17px 0 0 17px;
+            padding-left: 1rem;
+        }
+
+        #transactions td.amount-column{
+            text-align: end;
+            padding-right: 2rem;
+        }
+
+        .tbody-wrapper td.payment-column{
+            padding-left: 0.5rem;
+        }
+
+        .tbody-wrapper td{
+            justify-content: center;
+            vertical-align: middle;
+            border-bottom: solid 1px rgba(5, 113, 255, 0.082);
+        }
+        
+        .tbody-wrapper tr:hover{
+            background-color: rgba(5, 113, 255, 0.363);
+            background: linear-gradient(#ffffff, rgba(5, 113, 255, 0.116));
+            border-radius: 20px;
+        }
+
+        .tbody-wrapper td {
+            background-color: transparent;
+        }
+
+        .tbody-wrapper img {
+            width: 16px;
+        }
+
+        .tbody-wrapper {
+            border: 2px solid rgba(5, 113, 255, 0.082);
+            border-radius: 20px;
+            overflow: hidden;
+            }
+    </style>
+    <div class="ms-4 mt-4" style="margin-right: 2%;">
+        <h2 id="user-greeting">Transactions</h2>
+        <!-- <span>Es la mejor hora para administrar tus finanzas</span> -->
+    
+        <div class="d-flex row gap-3" id="transactions-container">
+            <table class="table table-borderless mb-0" id="transactions">
+                <thead class="transaction-table-header">
+                    <tr>
+                        <th scope="col"><input type="checkbox"></th>
+                        <th scope="col">DATE</th>
+                        <th scope="col">AMOUNT</th>
+                        <th scope="col">PAYMENT NAME</th>
+                        <th scope="col">METHOD</th>
+                        <th scope="col">CATEGORY</th>
+                        <th scope="col">STATUS</th>
+                        <th scope="col">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                            </svg>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+
+            <div class="tbody-wrapper">
+                <table class="table table-borderless my-0">
+                    <tbody>
+                        <tr>
+                            <td scope="row"><input type="checkbox"></td>
+                            <td scope="row">07/05/25</td>
+                            <td class="amount-column">-$10</td>
+                            <td class="payment-column">
+                                <img src="{% static 'images/youtube-logo.png' %}" alt="youtube-logo">
+                                YouTube
+                            </td>
+                            <td>VISA **7392</td>
+                            <td>Subscription</td>
+                            <td>Sucessful</td>
+                            <td>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row"><input type="checkbox"></td>
+                            <td scope="row">04/04/25</td>
+                            <td class="amount-column">-$1125</td>
+                            <td class="payment-column">
+                                <img src="{% static 'images/altice-logo.png' %}" alt="altice-logo">
+                                Altice
+                            </td>
+                            <td>Mastercard **9102</td>
+                            <td>Subscription</td>
+                            <td>Sucessful</td>
+                            <td>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row"><input type="checkbox"></td>
+                            <td scope="row">04/04/25</td>
+                            <td class="amount-column">-$1750</td>
+                            <td class="payment-column">
+                                <img src="{% static 'images/yokomo-logo.png' %}" alt="yokomo-logo">
+                                Yokomo
+                            </td>
+                            <td>Cash</td>
+                            <td>Cafe & Restaurants</td>
+                            <td>Sucessful</td>
+                            <td>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row"><input type="checkbox"></td>
+                            <td scope="row">07/05/25</td>
+                            <td class="amount-column">-$10</td>
+                            <td class="payment-column">
+                                <img src="{% static 'images/youtube-logo.png' %}" alt="youtube-logo">
+                                YouTube
+                            </td>
+                            <td>VISA **7392</td>
+                            <td>Subscription</td>
+                            <td>Sucessful</td>
+                            <td>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row"><input type="checkbox"></td>
+                            <td scope="row">04/04/25</td>
+                            <td class="amount-column">-$1125</td>
+                            <td class="payment-column">
+                                <img src="{% static 'images/altice-logo.png' %}" alt="altice-logo">
+                                Altice
+                            </td>
+                            <td>Mastercard **9102</td>
+                            <td>Subscription</td>
+                            <td>Sucessful</td>
+                            <td>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row"><input type="checkbox"></td>
+                            <td scope="row">04/04/25</td>
+                            <td class="amount-column">-$1750</td>
+                            <td class="payment-column">
+                                <img src="{% static 'images/yokomo-logo.png' %}" alt="yokomo-logo">
+                                Yokomo
+                            </td>
+                            <td>Cash</td>
+                            <td>Cafe & Restaurants</td>
+                            <td>Sucessful</td>
+                            <td>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row"><input type="checkbox"></td>
+                            <td scope="row">07/05/25</td>
+                            <td class="amount-column">-$10</td>
+                            <td class="payment-column">
+                                <img src="{% static 'images/youtube-logo.png' %}" alt="youtube-logo">
+                                YouTube
+                            </td>
+                            <td>VISA **7392</td>
+                            <td>Subscription</td>
+                            <td>Sucessful</td>
+                            <td>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row"><input type="checkbox"></td>
+                            <td scope="row">04/04/25</td>
+                            <td class="amount-column">-$1125</td>
+                            <td class="payment-column">
+                                <img src="{% static 'images/altice-logo.png' %}" alt="altice-logo">
+                                Altice
+                            </td>
+                            <td>Mastercard **9102</td>
+                            <td>Subscription</td>
+                            <td>Sucessful</td>
+                            <td>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row"><input type="checkbox"></td>
+                            <td scope="row">04/04/25</td>
+                            <td class="amount-column">-$1750</td>
+                            <td class="payment-column">
+                                <img src="{% static 'images/yokomo-logo.png' %}" alt="yokomo-logo">
+                                Yokomo
+                            </td>
+                            <td>Cash</td>
+                            <td>Cafe & Restaurants</td>
+                            <td>Sucessful</td>
+                            <td>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row"><input type="checkbox"></td>
+                            <td scope="row">07/05/25</td>
+                            <td class="amount-column">-$10</td>
+                            <td class="payment-column">
+                                <img src="{% static 'images/youtube-logo.png' %}" alt="youtube-logo">
+                                YouTube
+                            </td>
+                            <td>VISA **7392</td>
+                            <td>Subscription</td>
+                            <td>Sucessful</td>
+                            <td>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row"><input type="checkbox"></td>
+                            <td scope="row">04/04/25</td>
+                            <td class="amount-column">-$1125</td>
+                            <td class="payment-column">
+                                <img src="{% static 'images/altice-logo.png' %}" alt="altice-logo">
+                                Altice
+                            </td>
+                            <td>Mastercard **9102</td>
+                            <td>Subscription</td>
+                            <td>Sucessful</td>
+                            <td>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row"><input type="checkbox"></td>
+                            <td scope="row">04/04/25</td>
+                            <td class="amount-column">-$1750</td>
+                            <td class="payment-column">
+                                <img src="{% static 'images/yokomo-logo.png' %}" alt="yokomo-logo">
+                                Yokomo
+                            </td>
+                            <td>Cash</td>
+                            <td>Cafe & Restaurants</td>
+                            <td>Sucessful</td>
+                            <td>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row"><input type="checkbox"></td>
+                            <td scope="row">07/05/25</td>
+                            <td class="amount-column">-$10</td>
+                            <td class="payment-column">
+                                <img src="{% static 'images/youtube-logo.png' %}" alt="youtube-logo">
+                                YouTube
+                            </td>
+                            <td>VISA **7392</td>
+                            <td>Subscription</td>
+                            <td>Sucessful</td>
+                            <td>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row"><input type="checkbox"></td>
+                            <td scope="row">04/04/25</td>
+                            <td class="amount-column">-$1125</td>
+                            <td class="payment-column">
+                                <img src="{% static 'images/altice-logo.png' %}" alt="altice-logo">
+                                Altice
+                            </td>
+                            <td>Mastercard **9102</td>
+                            <td>Subscription</td>
+                            <td>Sucessful</td>
+                            <td>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row"><input type="checkbox"></td>
+                            <td scope="row">04/04/25</td>
+                            <td class="amount-column">-$1750</td>
+                            <td class="payment-column">
+                                <img src="{% static 'images/yokomo-logo.png' %}" alt="yokomo-logo">
+                                Yokomo
+                            </td>
+                            <td>Cash</td>
+                            <td>Cafe & Restaurants</td>
+                            <td>Sucessful</td>
+                            <td>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row"><input type="checkbox"></td>
+                            <td scope="row">07/05/25</td>
+                            <td class="amount-column">-$10</td>
+                            <td class="payment-column">
+                                <img src="{% static 'images/youtube-logo.png' %}" alt="youtube-logo">
+                                YouTube
+                            </td>
+                            <td>VISA **7392</td>
+                            <td>Subscription</td>
+                            <td>Sucessful</td>
+                            <td>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row"><input type="checkbox"></td>
+                            <td scope="row">04/04/25</td>
+                            <td class="amount-column">-$1125</td>
+                            <td class="payment-column">
+                                <img src="{% static 'images/altice-logo.png' %}" alt="altice-logo">
+                                Altice
+                            </td>
+                            <td>Mastercard **9102</td>
+                            <td>Subscription</td>
+                            <td>Sucessful</td>
+                            <td>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row"><input type="checkbox"></td>
+                            <td scope="row">04/04/25</td>
+                            <td class="amount-column">-$1750</td>
+                            <td class="payment-column">
+                                <img src="{% static 'images/yokomo-logo.png' %}" alt="yokomo-logo">
+                                Yokomo
+                            </td>
+                            <td>Cash</td>
+                            <td>Cafe & Restaurants</td>
+                            <td>Sucessful</td>
+                            <td>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row"><input type="checkbox"></td>
+                            <td scope="row">07/05/25</td>
+                            <td class="amount-column">-$10</td>
+                            <td class="payment-column">
+                                <img src="{% static 'images/youtube-logo.png' %}" alt="youtube-logo">
+                                YouTube
+                            </td>
+                            <td>VISA **7392</td>
+                            <td>Subscription</td>
+                            <td>Sucessful</td>
+                            <td>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row"><input type="checkbox"></td>
+                            <td scope="row">04/04/25</td>
+                            <td class="amount-column">-$1125</td>
+                            <td class="payment-column">
+                                <img src="{% static 'images/altice-logo.png' %}" alt="altice-logo">
+                                Altice
+                            </td>
+                            <td>Mastercard **9102</td>
+                            <td>Subscription</td>
+                            <td>Sucessful</td>
+                            <td>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row"><input type="checkbox"></td>
+                            <td scope="row">04/04/25</td>
+                            <td class="amount-column">-$1750</td>
+                            <td class="payment-column">
+                                <img src="{% static 'images/yokomo-logo.png' %}" alt="yokomo-logo">
+                                Yokomo
+                            </td>
+                            <td>Cash</td>
+                            <td>Cafe & Restaurants</td>
+                            <td>Sucessful</td>
+                            <td>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row"><input type="checkbox"></td>
+                            <td scope="row">07/05/25</td>
+                            <td class="amount-column">-$10</td>
+                            <td class="payment-column">
+                                <img src="{% static 'images/youtube-logo.png' %}" alt="youtube-logo">
+                                YouTube
+                            </td>
+                            <td>VISA **7392</td>
+                            <td>Subscription</td>
+                            <td>Sucessful</td>
+                            <td>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row"><input type="checkbox"></td>
+                            <td scope="row">04/04/25</td>
+                            <td class="amount-column">-$1125</td>
+                            <td class="payment-column">
+                                <img src="{% static 'images/altice-logo.png' %}" alt="altice-logo">
+                                Altice
+                            </td>
+                            <td>Mastercard **9102</td>
+                            <td>Subscription</td>
+                            <td>Sucessful</td>
+                            <td>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row"><input type="checkbox"></td>
+                            <td scope="row">04/04/25</td>
+                            <td class="amount-column">-$1750</td>
+                            <td class="payment-column">
+                                <img src="{% static 'images/yokomo-logo.png' %}" alt="yokomo-logo">
+                                Yokomo
+                            </td>
+                            <td>Cash</td>
+                            <td>Cafe & Restaurants</td>
+                            <td>Sucessful</td>
+                            <td>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                </svg>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+                
+        </div>
+    </div>
+{% endblock %}

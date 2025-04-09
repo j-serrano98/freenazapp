@@ -1,0 +1,52 @@
+{% extends  'users/authentication_layout.html' %}
+
+{% block form %}
+    <div class="card register-card">
+      <div class="card-body">
+        <h2 class="card-title" style="font-weight: 600; color: #084a9f; font-size: 2.7rem; padding-bottom: 1rem;">Sign Up</h2>
+        <form class="register-form" method="post" action="{% url 'users:register' %}">
+            {% csrf_token %}
+
+            {% if form.errors %}
+        <div class="alert alert-danger">
+            <strong>Error!</strong> Please correct the following:
+            <ul>
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        <li>{{ field|capfirst }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+            <div class="mb-3">
+                <input type="text" name="username" class="form-control" id="id_username" placeholder="Username" required>
+            </div>
+            <div class="mb-3">
+                <input type="email" name="email" class="form-control" id="id_email" placeholder="Email" required>
+            </div>
+            <div class="mb-3">
+                <input type="password" name="password1" class="form-control" id="id_password1" placeholder="Password" required>
+            </div>
+            <div class="mb-3">
+                <input type="password" name="password2" class="form-control" id="id_password2" placeholder="Confirm Password" required>
+            </div>
+            <div class="mb-3">
+                <select name="plan" class="form-select" id="id_plan" required>
+                    <option value="" selected>Select a plan</option>
+                    {% for choice in form.fields.plan.choices %}
+                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                    {% endfor %}
+                </select>
+                <small class="form-text text-muted">Choose your preferred plan.</small>
+            </div>
+            <div class="row justify-content-center pt-4 mb-3 ">
+                <button type="submit" class="btn btn-primary btn-lg col-md-6">Register</button>
+            </div>
+            <div class="mt-4 d-flex justify-content-end w-30">
+                <p>Already have an account? <a href="{% url 'users:login' %}">Login</a></p>
+            </div>
+        </form>
+      </div>
+    </div>
+{% endblock %}
