@@ -190,89 +190,70 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="">
+                    <form method="POST">
                         {% csrf_token %}
                         <div class="row" style="display: flex; flex-wrap:wrap; margin-bottom: 10px;">
                             <div class="col">
                                 <label for="type">Type</label>
-                                <select name="type" id="type">
-                                    <option value="income">Income</option>
-                                    <option value="expense">Expense</option>
-                                </select>
+                                {{ form.type }}
                             </div>
                             <div class="col">
                                 <label for="currency">Currency</label>
-                                <select name="currency" id="currency">
-                                    <option value="dop">DOP</option>
-                                    <option value="usd">USD</option>
-                                    <option value="eur">EUR</option>
-                                </select>
+                                {{ form.currency }}
                             </div>
                             <div class="col">
                                 <label for="amount">Amount</label>
-                                <input type="text" name="amount" id="amount" placeholder="$10,500.00">
+                                {{ form.amount }}
                             </div>                          
                         </div>
                         <div class="row" style="display: flex; flex-wrap:wrap; margin-bottom: 10px;">
                             <div class="col">
                                 <label for="name">Name</label>
-                                <input type="text" name="name" id="name" placeholder="Name of the transaction or short description">
+                                {{ form.name }}
                             </div>
                         </div>
                         <div class="row" style="display: flex; flex-wrap:wrap; margin-bottom: 10px;">
                             <div class="col">
                                 <label for="method">Method</label>
-                                <select name="method" id="method">
-                                    <option value="method-1" selected>Mastercard **2154</option>
-                                    <option value="method-2">VISA **8042</option>
-                                    <option value="method-3">AMEX **4823</option>
-                                </select>
+                                {{ form.method }}
                             </div>
                             <div class="col">
                                 <label for="method">Category</label>
-                                <select name="category" id="category">
-                                    <option value="" disabled selected>Select a category</option>
-                                    <option value="category-1">Food and Beverage</option>
-                                    <option value="category-2">Restaurants</option>
-                                    <option value="category-3">Transportation</option>
-                                </select>
+                                {{ form.category }}
                             </div>
                         </div>
                         <div class="row" style="display: flex; flex-wrap:wrap; margin-bottom: 10px;">
                             <div class="col">
                                 <label for="method">Date</label>
                                 <div class="row" style="display: flex; flex-wrap:wrap;padding-left: 12px; padding-right: 12px;">
-                                    <button class="rounded-button" style="width: auto;">
+                                    <!-- <button class="rounded-button" style="width: auto;">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-week" viewBox="0 0 16 16">
                                             <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
                                             <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
                                         </svg>
-                                    </button>
-                                    <input style="width: 78%;"  type="text" name="method" id="method" placeholder="01 Apr 2025"> 
+                                    </button> -->
+                                    {{ form.date }}
                                 </div>
                             </div>
                             <div class="col">
                                 <label for="category">Status</label>
-                                <select name="status" id="status">
-                                    <option value="" disabled selected>Select a status</option>
-                                    <option value="successful">Sucessful</option>
-                                    <option value="cancelled">Cancelled</option>
-                                </select>
+                                {{ form.status }}
                             </div>
                         </div>
+                        <div class="modal-footer row" style="display: flex; justify-content: center;">
+                            <button type="button" class="btn generic-button" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn generic-button-fill">Save</button>
+                        </div>
                     </form>
-                </div>
-                <div class="modal-footer row" style="display: flex; justify-content: center;">
-                    <button type="button" class="btn generic-button" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn generic-button-fill">Save</button>
+                <!-- <form method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Save</button>
+                </form>  -->
                 </div>
             </div>
         </div>
     </div>
-
-
-
-
 
 
 

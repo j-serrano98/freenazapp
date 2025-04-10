@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import TransactionsPageView
+from .views import TransactionCreateView
 
 app_name = 'transactions'
 
 urlpatterns = [
-    path('', TransactionsPageView.as_view(), name='transactions'),
+    path('', TransactionCreateView.as_view(), name='transactions'),
+    # path('new/', )
 ]
