@@ -5,5 +5,4 @@ app_name = 'transactions'
 
 urlpatterns = [
     path('', TransactionCreateView.as_view(), name='transactions'),
-    # path('new/', )
 ]

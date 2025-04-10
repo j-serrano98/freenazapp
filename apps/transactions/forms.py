@@ -1,6 +1,7 @@
 from django import forms
 from .models import Transaction, TransactionCategory, PaymentMethod
 
+
 class TransactionForm(forms.ModelForm):
     status_choices = Transaction.StatusChoices.choices
 
@@ -17,6 +18,7 @@ class TransactionForm(forms.ModelForm):
             'amount': forms.TextInput(attrs={'placeholder': '765.23'}),
             'name': forms.TextInput(attrs={'placeholder': 'Name of the transaction or short description'}),
             'date': forms.TextInput(attrs={'placeholder': '04/11/2025'}),
+
         }
 
     def __init__(self, *args, **kwargs):

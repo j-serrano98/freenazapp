@@ -1,6 +1,7 @@
 from django.views.generic.list import ListView
 from django.views.generic.edit import FormMixin
 from django.urls import reverse_lazy
+from django.utils import timezone
 from .models import Transaction
 from .forms import TransactionForm
 from django.http import HttpResponseRedirect
@@ -10,7 +11,7 @@ class TransactionCreateView(FormMixin, ListView):
     model = Transaction
     form_class = TransactionForm
     template_name = 'transactions/transactions.html'
-    context_object_name = 'transactions'
+    context_object_name = 'transacciones'
     success_url = reverse_lazy('transactions:transactions')
 
     def get_queryset(self):
@@ -30,9 +31,9 @@ class TransactionCreateView(FormMixin, ListView):
             return self.form_invalid(form)
         
     def form_valid(self, form):
-        print(form)
         transaction = form.save(commit=False)
         transaction.user = self.request.user
+        transaction.formatted_date = transaction.date.strftime("%m%d%y")
         transaction.save()
         return HttpResponseRedirect(self.get_success_url())
     
