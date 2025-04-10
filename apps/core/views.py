@@ -3,6 +3,3 @@ from django.views.generic import TemplateView
 
 class HomePageView(TemplateView):
     template_name = 'core/overview.html'
-
-class TransactionsPageView(TemplateView):
-    template_name = 'core/transactions.html'
