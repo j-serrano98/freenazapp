@@ -1,18 +1,19 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.list import ListView
 from django.views.generic.edit import FormMixin
 from django.urls import reverse_lazy
-from django.utils import timezone
 from .models import Transaction
 from .forms import TransactionForm
 from django.http import HttpResponseRedirect
 
 
-class TransactionCreateView(FormMixin, ListView):
+class TransactionCreateView(LoginRequiredMixin, FormMixin, ListView):
     model = Transaction
     form_class = TransactionForm
     template_name = 'transactions/transactions.html'
-    context_object_name = 'transacciones'
+    context_object_name = 'transactions'
     success_url = reverse_lazy('transactions:transactions')
+    login_url = "users:login"
 
     def get_queryset(self):
         return Transaction.objects.filter(user=self.request.user).order_by('-date')

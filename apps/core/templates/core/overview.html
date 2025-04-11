@@ -135,7 +135,7 @@
         }
     </style>
     <div class="ms-4 mt-4">
-        <h2 id="user-greeting"><span id="user-name">Josue</span>!</h2>
+        <h2 id="user-greeting"><span id="user-name">{{ request.user.username }}</span>!</h2>
         <!-- <span>Es la mejor hora para administrar tus finanzas</span> -->
     
         <div class="d-flex row gap-3">
@@ -254,36 +254,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {% for transaction in recent_transactions %}
                                     <tr>
-                                        <td scope="row">07/05/25</td>
-                                        <td class="amount-column">-$10</td>
+                                        <td scope="row">{{ transaction.date|date:"m/d/y" }}</td>
+                                        {% if transaction.type == 'Income' %}
+                                            <td class="amount-column">{{ transaction.amount }}</td>
+                                        {% else %}
+                                            <td class="amount-column">-{{ transaction.amount }}</td>
+                                        {% endif %}
                                         <td class="payment-column">
                                             <img src="{% static 'images/youtube-logo.png' %}" alt="youtube-logo">
-                                            YouTube
+                                            {{ transaction.name }}
                                         </td>
-                                        <td>VISA **7392</td>
-                                        <td>Subscription</td>
+                                        <td>{{ transaction.method }}</td>
+                                        <td>{{ transaction.category }}</td>
                                     </tr>
-                                    <tr>
-                                        <td scope="row">04/04/25</td>
-                                        <td class="amount-column">-$1125</td>
-                                        <td class="payment-column">
-                                            <img src="{% static 'images/altice-logo.png' %}" alt="altice-logo">
-                                            Altice
-                                        </td>
-                                        <td>Mastercard **9102</td>
-                                        <td>Subscription</td>
-                                    </tr>
-                                    <tr>
-                                        <td scope="row">04/04/25</td>
-                                        <td class="amount-column">-$1750</td>
-                                        <td class="payment-column">
-                                            <img src="{% static 'images/yokomo-logo.png' %}" alt="yokomo-logo">
-                                            Yokomo
-                                        </td>
-                                        <td>Cash</td>
-                                        <td>Cafe & Restaurants</td>
-                                    </tr>
+                                    {% endfor %}
                                 </tbody>
                         </table>
                     </div>
