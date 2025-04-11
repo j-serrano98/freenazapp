@@ -1,6 +1,7 @@
 {% extends 'core/layout.html' %}
 
 {% load static %}
+{% load humanize %}
 
 {% block content %}
     <style>
@@ -258,9 +259,9 @@
                                     <tr>
                                         <td scope="row">{{ transaction.date|date:"m/d/y" }}</td>
                                         {% if transaction.type == 'Income' %}
-                                            <td class="amount-column">{{ transaction.amount }}</td>
+                                            <td class="amount-column">${{ transaction.amount|floatformat:2|intcomma }}</td>
                                         {% else %}
-                                            <td class="amount-column">-{{ transaction.amount }}</td>
+                                            <td class="amount-column">-${{ transaction.amount|floatformat:2|intcomma }}</td>
                                         {% endif %}
                                         <td class="payment-column">
                                             <img src="{% static 'images/youtube-logo.png' %}" alt="youtube-logo">

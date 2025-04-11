@@ -1,6 +1,7 @@
 {% extends 'core/layout.html' %}
 
 {% load static %}
+{% load humanize %}
 
 {% block content %}
     <style>
@@ -326,9 +327,9 @@
                                 <td scope="row" style=" text-align:center; width: 5%;"><input type="checkbox"></td>
                                 <td scope="row" style=" text-align:center; width: 10%;">{{ transaction.date|date:"m/d/y" }}</td>
                                 {% if transaction.type|title == "Income" %}
-                                    <td class="amount-column" style=" text-align:center; width: 10%;">{{ transaction.amount }}</td>
+                                    <td class="amount-column" style=" text-align:right; width: 10%;">${{ transaction.amount|floatformat:2|intcomma }}</td>
                                 {% else %}
-                                    <td class="amount-column" style=" text-align:center; width: 10%;">-{{ transaction.amount }}</td>
+                                    <td class="amount-column" style=" text-align:right; width: 10%;">-${{ transaction.amount|floatformat:2|intcomma }}</td>
                                 {% endif %}
                                 <td class="payment-column" style=" text-align:center; width: 30%;">
                                     <!-- <img src="{% static 'images/youtube-logo.png' %}" alt="youtube-logo"> -->
