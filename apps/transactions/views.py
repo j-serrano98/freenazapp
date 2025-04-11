@@ -2,8 +2,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.list import ListView
 from django.views.generic.edit import FormMixin
 from django.urls import reverse_lazy
-from .models import Transaction
-from .forms import TransactionForm
+from .models import Transaction, TransactionCategory
+from .forms import TransactionForm, TransactionCategoryForm
 from django.http import HttpResponseRedirect
 
 
@@ -42,3 +42,23 @@ class TransactionCreateView(LoginRequiredMixin, FormMixin, ListView):
         print(form.errors)
         return self.render_to_response(self.get_context_data(form=form))
     
+
+class CategoryCreateView(LoginRequiredMixin, FormMixin, ListView):
+    model = TransactionCategory
+    form_class =  TransactionCategoryForm
+    template_name = 'transactions/categories.html'
+    success_url = reverse_lazy('transactions:categories')
+    login_url = 'users:login'
+
+    def get_queryset(self):
+        return TransactionCategory.objects.filter(user=self.request.user).order_by('name')
+    
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+
+        user = self.request.user
+
+
+        context['income_categories'] = TransactionCategory.objects.filter(user=user).filter(type=TransactionCategory.TypeChoices.INCOME)
+        context['expense_categories'] = TransactionCategory.objects.filter(user=user).filter(type=TransactionCategory.TypeChoices.EXPENSE)
+        return context

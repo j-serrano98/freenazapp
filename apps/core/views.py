@@ -34,8 +34,6 @@ class HomePageView(LoginRequiredMixin, TemplateView):
         context['total_balance_decimal'] = decimal_part
         # context['total_balance'] = f"{total_incomes - total_expenses:,.2f}"
 
-
-
         # LAST TRANSACTIONS
         context['recent_transactions'] = Transaction.objects.filter(user=user).order_by('-date')[:3]
 
