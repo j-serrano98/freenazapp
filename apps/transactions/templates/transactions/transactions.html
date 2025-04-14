@@ -224,7 +224,13 @@
                             </div>
                             <div class="col">
                                 <label for="method">Category</label>
-                                {{ form.category }}
+                                <select name="category" id="id_category">
+                                    {% for category in form.fields.category.queryset %}
+                                        <option value="{{ category.pk }}" data-type="{{ category.type }}">
+                                            {{ category.name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
                             </div>
                         </div>
                         <div class="row" style="display: flex; flex-wrap:wrap; margin-bottom: 10px;">
@@ -365,4 +371,28 @@
                 
         </div>
     </div>
+    <script>
+            const typeField = document.getElementById('id_type');
+            const categoryField = document.getElementById('id_category');
+
+            function filterCategories() {
+                const selectedType = typeField.value;
+
+                Array.from(categoryField.options).forEach(option => {
+                    const optionType = option.getAttribute('data-type');
+                    option.style.display = optionType === selectedType || option.value === "" ? "block" : "none";
+                });
+
+                if (categoryField.selectedOptions.length) {
+                    console.log(categoryField.selectedOptions.length)
+                    const selectedOption = categoryField.selectedOptions[0];
+                    if (selectedOption.style.display === "none") {
+                        categoryField.selectedIndex = 0;
+                    }
+                }
+            }
+
+            typeField.addEventListener('change', filterCategories)
+            typeField.addEventListener('change', console.log(typeField.value))
+    </script>
 {% endblock %}

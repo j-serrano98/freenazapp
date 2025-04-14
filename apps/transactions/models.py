@@ -19,7 +19,7 @@ class TransactionCategory(models.Model):
         EXPENSE = "EXPENSE", "Expense"
 
     name = models.CharField(max_length=100)
-    type = models.CharField(max_length=7, choices=TypeChoices.choices)
+    type = models.CharField(max_length=7, choices=TypeChoices, default=TypeChoices.EXPENSE)
     user = models.ForeignKey(
          settings.AUTH_USER_MODEL,
          on_delete=models.CASCADE,
@@ -28,7 +28,7 @@ class TransactionCategory(models.Model):
          )
      
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.name} ({self.type})"
     
 class Transaction(models.Model):
 

@@ -39,7 +39,6 @@ class TransactionCreateView(LoginRequiredMixin, FormMixin, ListView):
         return HttpResponseRedirect(self.get_success_url())
     
     def form_invalid(self, form):
-        print(form.errors)
         return self.render_to_response(self.get_context_data(form=form))
     
 
@@ -62,3 +61,20 @@ class CategoryCreateView(LoginRequiredMixin, FormMixin, ListView):
         context['income_categories'] = TransactionCategory.objects.filter(user=user).filter(type=TransactionCategory.TypeChoices.INCOME)
         context['expense_categories'] = TransactionCategory.objects.filter(user=user).filter(type=TransactionCategory.TypeChoices.EXPENSE)
         return context
+    
+    def post(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+        
+    def form_valid(self, form):
+        category = form.save(commit=False)
+        category.user = self.request.user
+        category.save()
+        return HttpResponseRedirect(self.get_success_url())
+    
+    def form_invalid(self, form):
+        return self.render_to_response(self.get_context_data(form=form))

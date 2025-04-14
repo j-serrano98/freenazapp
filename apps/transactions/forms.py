@@ -18,6 +18,7 @@ class TransactionForm(forms.ModelForm):
             'amount': forms.TextInput(attrs={'placeholder': '765.23'}),
             'name': forms.TextInput(attrs={'placeholder': 'Name of the transaction or short description'}),
             'date': forms.TextInput(attrs={'placeholder': '04/11/2025'}),
+            'type': forms.Select(attrs={'id': 'id_type'})
 
         }
 
