@@ -205,16 +205,28 @@
                             <div class="col">
                                 <label for="currency">Currency</label>
                                 {{ form.currency }}
-                            </div>
+                            </div>                        
+                        </div>
+                        <div class="row" style="display: flex; flex-wrap:wrap; margin-bottom: 10px;">
                             <div class="col">
                                 <label for="amount">Amount</label>
                                 {{ form.amount }}
+                            </div>                          
+                            <div class="col">
+                                <label for="amount">Taxes</label>
+                                {{ form.tax }}
                             </div>                          
                         </div>
                         <div class="row" style="display: flex; flex-wrap:wrap; margin-bottom: 10px;">
                             <div class="col">
                                 <label for="name">Name</label>
                                 {{ form.name }}
+                            </div>
+                        </div>
+                        <div class="row" style="display: flex; flex-wrap:wrap; margin-bottom: 10px;">
+                            <div class="col">
+                                <label for="name">Description</label>
+                                {{ form.description }}
                             </div>
                         </div>
                         <div class="row" style="display: flex; flex-wrap:wrap; margin-bottom: 10px;">
@@ -234,18 +246,18 @@
                             </div>
                         </div>
                         <div class="row" style="display: flex; flex-wrap:wrap; margin-bottom: 10px;">
-                            <div class="col">
+                            <!-- <div class="col">
                                 <label for="method">Date</label>
-                                <div class="row" style="display: flex; flex-wrap:wrap;padding-left: 12px; padding-right: 12px;">
+                                <div class="row" style="display: flex; flex-wrap:wrap;padding-left: 12px; padding-right: 12px;"> -->
                                     <!-- <button class="rounded-button" style="width: auto;">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-week" viewBox="0 0 16 16">
                                             <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
                                             <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
                                         </svg>
                                     </button> -->
-                                    {{ form.date }}
+                                    <!-- {{ form.date }}
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col">
                                 <label for="category">Status</label>
                                 {{ form.status }}
@@ -296,7 +308,7 @@
                     </svg>
                     <span>Export CSV</span>
                 </button>
-                <button class="generic-button-fill" data-bs-toggle="modal" data-bs-target="#transaction-modal">
+                <button id="add-new-transaction" class="generic-button-fill" data-bs-toggle="modal" data-bs-target="#transaction-modal">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
                     </svg>
@@ -313,9 +325,10 @@
                         <th scope="col" style=" text-align:center; width: 10%;">DATE</th>
                         <th scope="col" style=" text-align:center; width: 10%;">AMOUNT</th>
                         <th scope="col" style=" text-align:center; width: 30%;">PAYMENT NAME</th>
+                        <th scope="col" style=" text-align:center; width: 30%;">DESCRIPTION NAME</th>
                         <th scope="col" style=" text-align:center; width: 10%;">METHOD</th>
                         <th scope="col" style=" text-align:center; width: 20%;">CATEGORY</th>
-                        <th scope="col" style=" text-align:center; width: 10%;">STATUS</th>
+                        <th scope="col" style=" text-align:center; width: 10%;">REF</th>
                         <th scope="col" style=" text-align:center; width: 5%;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
                                 <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
@@ -341,9 +354,14 @@
                                     <!-- <img src="{% static 'images/youtube-logo.png' %}" alt="youtube-logo"> -->
                                     {{ transaction.name }}
                                 </td>
+                                <td class="payment-column" style=" text-align:center; width: 30%;">
+                                    <!-- <img src="{% static 'images/youtube-logo.png' %}" alt="youtube-logo"> -->
+                                    {{ transaction.description }}
+                                </td>
                                 <td style=" text-align:center; width: 10%;">{{ transaction.method }}</td>
                                 <td style=" text-align:center; width: 20%;">{{ transaction.category }}</td>
-                                <td style=" text-align:center; width: 10%;">{{ transaction.status|title }}</td>
+                                <!-- <td style=" text-align:center; width: 10%;">{{ transaction.status|title }}</td> -->
+                                <td style=" text-align:center; width: 10%;">{{ transaction.ref }}</td>
                                 <td style=" text-align:center; width: 5%;">
                                     
                                     <div class="btn-group">
@@ -372,27 +390,31 @@
         </div>
     </div>
     <script>
-            const typeField = document.getElementById('id_type');
-            const categoryField = document.getElementById('id_category');
+        const addNewTrasactionBtn = document.getElementById("add-new-transaction");
+        const typeField = document.getElementById('id_type');
+        const categoryField = document.getElementById('id_category');
 
-            function filterCategories() {
-                const selectedType = typeField.value;
+        function selectCategory() {
+            const selectedType = typeField.value;
+        }
 
-                Array.from(categoryField.options).forEach(option => {
-                    const optionType = option.getAttribute('data-type');
-                    option.style.display = optionType === selectedType || option.value === "" ? "block" : "none";
-                });
+        function filterCategories() {
+            const selectedType = typeField.value;
 
-                if (categoryField.selectedOptions.length) {
-                    console.log(categoryField.selectedOptions.length)
-                    const selectedOption = categoryField.selectedOptions[0];
-                    if (selectedOption.style.display === "none") {
-                        categoryField.selectedIndex = 0;
-                    }
+            Array.from(categoryField.options).forEach(option => {
+                const optionType = option.getAttribute('data-type');
+                option.style.display = optionType === selectedType || option.value === "" ? "block" : "none";
+            });
+
+            if (categoryField.selectedOptions.length) {
+                const selectedOption = categoryField.selectedOptions[0];
+                if (selectedOption.style.display === "none") {
+                    categoryField.selectedIndex = 0;
                 }
             }
+        }
 
-            typeField.addEventListener('change', filterCategories)
-            typeField.addEventListener('change', console.log(typeField.value))
+        addNewTrasactionBtn.addEventListener('click', filterCategories)
+        typeField.addEventListener('change', filterCategories)
     </script>
 {% endblock %}

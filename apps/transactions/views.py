@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from .models import Transaction, TransactionCategory
 from .forms import TransactionForm, TransactionCategoryForm
 from django.http import HttpResponseRedirect
+from .utils import create_transaction_ref
 
 
 class TransactionCreateView(LoginRequiredMixin, FormMixin, ListView):
@@ -34,11 +35,30 @@ class TransactionCreateView(LoginRequiredMixin, FormMixin, ListView):
     def form_valid(self, form):
         transaction = form.save(commit=False)
         transaction.user = self.request.user
-        transaction.formatted_date = transaction.date.strftime("%m%d%y")
+        refs = create_transaction_ref()
+        transaction.ref = refs[0]
+        # transaction.formatted_date = transaction.date.strftime("%m%d%y")
         transaction.save()
+
+        if transaction.tax > 0:
+            Transaction.objects.create(
+                user = self.request.user,
+                type = transaction.type,
+                currency = transaction.currency,
+                amount = transaction.tax,
+                name = transaction.name,
+                description = f"Tax for transaction {transaction.ref}",
+                method = transaction.method,
+                category = transaction.category,
+                status = transaction.status,
+                ref = refs[1],
+                related_transaction=transaction
+                )
+            
         return HttpResponseRedirect(self.get_success_url())
     
     def form_invalid(self, form):
+        print(form.errors)
         return self.render_to_response(self.get_context_data(form=form))
     
 
@@ -60,6 +80,7 @@ class CategoryCreateView(LoginRequiredMixin, FormMixin, ListView):
 
         context['income_categories'] = TransactionCategory.objects.filter(user=user).filter(type=TransactionCategory.TypeChoices.INCOME)
         context['expense_categories'] = TransactionCategory.objects.filter(user=user).filter(type=TransactionCategory.TypeChoices.EXPENSE)
+        context['investment_categories'] = TransactionCategory.objects.filter(user=user).filter(type=TransactionCategory.TypeChoices.INVESTMENT)
         return context
     
     def post(self, request, *args, **kwargs):

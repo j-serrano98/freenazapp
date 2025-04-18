@@ -1,5 +1,6 @@
 from django import forms
 from .models import Transaction, TransactionCategory, PaymentMethod
+import datetime
 
 
 class TransactionForm(forms.ModelForm):
@@ -13,11 +14,12 @@ class TransactionForm(forms.ModelForm):
 
     class Meta:
         model = Transaction
-        fields = ['type', 'currency', 'amount', 'name', 'method', 'category', 'date', 'status']
+        fields = ['type', 'currency', 'amount', 'tax', 'name', 'description', 'method', 'category', 'status']
         widgets = {
-            'amount': forms.TextInput(attrs={'placeholder': '765.23'}),
-            'name': forms.TextInput(attrs={'placeholder': 'Name of the transaction or short description'}),
-            'date': forms.TextInput(attrs={'placeholder': '04/11/2025'}),
+            'amount': forms.TextInput(attrs={'placeholder': '765.65'}),
+            'tax': forms.TextInput(attrs={'placeholder': '3.15'}),
+            'name': forms.TextInput(attrs={'placeholder': 'Name of the transaction'}),
+            'description': forms.TextInput(attrs={'placeholder': 'Description of the transaction'}),
             'type': forms.Select(attrs={'id': 'id_type'})
 
         }

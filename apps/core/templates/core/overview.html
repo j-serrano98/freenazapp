@@ -198,7 +198,7 @@
                      <div class="card card-generics sm-card">
                          <div class="card-body">
                              <h6 class="card-title pb-2">Total Savings</h6>
-                             <h4 class="ms-auto balance">$74,913<span class="decimal-value">.49</span></h4>
+                             <h4 class="ms-auto balance">$82,274<span class="decimal-value">.44</span></h4>
                              <div class="balance-comparison d-flex flex-row gap-2">
                                  <div class="percentage-variation">
                                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
@@ -258,7 +258,7 @@
                                     {% for transaction in recent_transactions %}
                                     <tr>
                                         <td scope="row">{{ transaction.date|date:"m/d/y" }}</td>
-                                        {% if transaction.type == 'Income' %}
+                                        {% if transaction.type == 'INCOME' %}
                                             <td class="amount-column">${{ transaction.amount|floatformat:2|intcomma }}</td>
                                         {% else %}
                                             <td class="amount-column">-${{ transaction.amount|floatformat:2|intcomma }}</td>

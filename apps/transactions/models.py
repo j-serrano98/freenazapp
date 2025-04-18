@@ -17,9 +17,10 @@ class TransactionCategory(models.Model):
     class TypeChoices(models.TextChoices):
         INCOME = "INCOME", "Income"
         EXPENSE = "EXPENSE", "Expense"
+        INVESTMENT = "INVESTMENT", "Investment"
 
     name = models.CharField(max_length=100)
-    type = models.CharField(max_length=7, choices=TypeChoices, default=TypeChoices.EXPENSE)
+    type = models.CharField(max_length=10, choices=TypeChoices, default=TypeChoices.EXPENSE)
     user = models.ForeignKey(
          settings.AUTH_USER_MODEL,
          on_delete=models.CASCADE,
@@ -28,7 +29,7 @@ class TransactionCategory(models.Model):
          )
      
     def __str__(self):
-        return f"{self.name} ({self.type})"
+        return f"{self.name}"
     
 class Transaction(models.Model):
 
@@ -41,14 +42,18 @@ class Transaction(models.Model):
         SUCCESSFUL = "SUCCESSFUL", "Successful"  
         CANCELLED = "CANCELLED", "Cancelled"  
 
-    type = models.CharField(max_length=7, choices=TransactionCategory.TypeChoices, default=TransactionCategory.TypeChoices.INCOME)
+    type = models.CharField(max_length=10, choices=TransactionCategory.TypeChoices, default=TransactionCategory.TypeChoices.EXPENSE)
     currency = models.CharField(max_length=3, choices=CurrencyChoices, default=CurrencyChoices.DOP)
-    amount = models.DecimalField(max_digits=12, decimal_places=2)
-    name = models.CharField(max_length=255)
+    amount = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    tax = models.DecimalField(max_digits=12, decimal_places=2, blank=True, default=0)
+    name = models.CharField(max_length=100)
+    description = models.CharField(max_length=255, default="")
     method = models.ForeignKey(PaymentMethod, on_delete=models.SET_NULL, null=True, blank=True)
     category = models.ForeignKey(TransactionCategory, on_delete=models.SET_NULL, null=True, blank=True)
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20, choices=StatusChoices)
+    ref = models.CharField(max_length=9, null=True, blank=True)
+    related_transaction = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL, related_name='tax_transactions')
 
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,

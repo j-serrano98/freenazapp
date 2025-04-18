@@ -69,8 +69,47 @@
             border-radius: 50px;
             display: flex;
             align-items: center;
-            width: 60px;
-            height: 60px;
+            width: 40px;
+            height: 40px;
+        }
+
+        .add-new-category{
+            position: absolute;
+            bottom: 48px;
+            right: 48px;
+            width: 64px;
+            height: 64px;
+        }
+
+        input,
+        select {
+            border-radius: 60px; 
+            padding: 0.5rem;
+            width: 100%;
+            border: 2px solid rgba(0, 0, 0, 0.082);
+            font-size: 0.9rem;
+            color: rgba(0, 0, 0, 0.479);
+            font-weight: 400;
+        }
+        
+        option {
+            font-size: 0.9rem;
+        }
+
+        label {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .modal-content {
+            border-radius: 25px;
+            width: 400px;
+            height: 530px;
+        }
+
+        .modal-body .row .col, 
+        .modal-body .row {
+            padding: 0.1rem;
         }
 
     
@@ -85,6 +124,9 @@
                 </li>
                 <li class="nav-item" role="presentation">
                 <button class="nav-link" id="expense-tab" data-bs-toggle="tab" data-bs-target="#expense-tab-pane" type="button" role="tab" aria-controls="expense-tab-pane" aria-selected="false">Expense</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                <button class="nav-link" id="investment-tab" data-bs-toggle="tab" data-bs-target="#invesment-tab-pane" type="button" role="tab" aria-controls="investment-tab-pane" aria-selected="false">Investment</button>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
@@ -101,7 +143,7 @@
                             {% endfor %}
                         </ul>
                     </div>
-                    <button class="rounded-button-fill" data-bs-toggle="modal" data-bs-target="#budget-modal" style="position: absolute; bottom: 48px; right: 48px; width: 64px; height: 64px; background-color: rgb(0, 170, 23);">
+                    <button class="rounded-button-fill add-new-category" data-bs-toggle="modal" data-bs-target="#budget-modal" style="position: absolute; bottom: 48px; right: 48px; width: 64px; height: 64px; background-color: rgb(0, 170, 23);">
                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
                             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
                         </svg>
@@ -120,7 +162,26 @@
                             {% endfor %}
                         </ul>
                     </div>
-                    <button class="rounded-button-fill" data-bs-toggle="modal" data-bs-target="#budget-modal" style="position: absolute; bottom: 48px; right: 48px; width: 64px; height: 64px; background-color: red;">
+                    <button class="rounded-button-fill add-new-category" data-bs-toggle="modal" data-bs-target="#budget-modal" style="position: absolute; bottom: 48px; right: 48px; width: 64px; height: 64px; background-color: red;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="tab-pane fade" id="investment-tab-pane" role="tabpanel" aria-labelledby="investment-tab" tabindex="0">
+                    <div class="card border-0">
+                        <ul class="list-group list-group-flush">
+                            {% for category in investment_categories %}
+                                <li class="list-group-item">
+                                    <img src="{% static 'images/logo.png' %}" alt="{{ category.name|lower }} category" style="width: 48px;">
+                                    {{ category.name }}
+                                </li>
+                            {% empty %}
+                                <li class="list-group-item">No investment categories yet.</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <button class="rounded-button-fill add-new-category" data-bs-toggle="modal" data-bs-target="#budget-modal" style="position: absolute; bottom: 48px; right: 48px; width: 64px; height: 64px; background-color: rgb(0, 119, 255);">
                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
                             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
                         </svg>
@@ -136,6 +197,7 @@
 </div>
 
 
+<!-- <div class="modal fade show" id="budget-modal" tabindex="-1" aria-labelledby="budgetModalLabel" aria-hidden="true" aria-modal="true" role="dialog" style="display: block;"> -->
 <div class="modal fade" id="budget-modal" tabindex="-1" aria-labelledby="budgetModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -154,15 +216,14 @@
                         <div class="col">
                             <label for="method">Name</label>
                             {{ form.name }}
+                        </div>
+                    </div>
+                    <div class="row" style="display: flex; flex-wrap:wrap; margin-bottom: 10px;">
+                        <div class="col">
+                            <label for="method">Type</label>
                             {{ form.type }}
                         </div>
                     </div>
-                    <!-- <div class="row" style="display: flex; flex-wrap:wrap; margin-bottom: 10px;">
-                        <div class="col">
-                            <label for="method">Icon</label>
-                            <input type="text">
-                        </div>
-                    </div> -->
                     <div class="modal-footer row" style="display: flex; justify-content: center;">
                         <button type="button" class="btn generic-button" data-bs-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn generic-button-fill">Save</button>
