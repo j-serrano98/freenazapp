@@ -180,6 +180,21 @@
             overflow-y: scroll;
 
         }
+
+        .add-fund:hover {
+            cursor: pointer;
+            background-color: #08499f09;
+        }
+
+        .add-fund:active {
+            background-color: #084a9f;
+            color: #ffffff;
+        }
+
+        input[type=checkbox]:hover {
+            cursor: pointer;
+        }
+
     </style>
     <!-- Modal -->
     <div class="modal fade" id="investment-modal" tabindex="-1" aria-labelledby="investmentModalLabel" aria-hidden="true">
@@ -307,7 +322,7 @@
         </div>
     
         <div class="d-flex row" id="investments-container">
-            <table class="table mb-0 table-borderless" id="investments">
+            <table class="table mb-0 table-borderless" id="investments" style="height: 20vh;">
                 <thead class="investment-table-header">
                     <tr>
                         <th scope="col" style=" text-align:center; width: 5%;"><input type="checkbox"></th>
@@ -328,9 +343,44 @@
                         </th>
                     </tr>
                 </thead>
+                <tbody>
+                    {% for investment in investments %}
+                        <tr>
+                            <th scope="col" style=" text-align:center; width: 5%;"><input type="checkbox"></th>
+                            <td class="payment-column" style=" text-align:center; width: 25%;">
+                                {{ investment.name }}
+                            </td>
+                            <td style=" text-align:center; width: 10%;">RD${{ investment.current_share_value|intcomma }}</td>
+                            <td style=" text-align:center; width: 10%;">RD${{ investment.previous_share_value|intcomma }}</td>
+                            <td style=" text-align:center; width: 10%;">RD${{ investment.fund_value|intcomma }}</td>
+                            <td style=" text-align:center; width: 5%;">{{ investment.number_of_contributors|intcomma }}</td>
+                            <td style=" text-align:center; width: 5%;">{{ investment.return_last_30_days|floatformat:2}}%</td>
+                            <td style=" text-align:center; width: 5%;">{{ investment.return_last_90_days|floatformat:2 }}%</td>
+                            <td style=" text-align:center; width: 5%;">{{ investment.return_last_180_days|floatformat:2 }}%</td>
+                            <td style=" text-align:center; width: 5%;">{{ investment.return_last_365_days|floatformat:2 }}%</td>
+                            <td scope="row" style=" text-align:center; width: 10%;">{{ investment.updated_at|date:"m/d/y" }}</td>
+                            <td style=" text-align:center; width: 5%;">
+                                
+                                <div class="btn-group">
+                                    <button class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="border: 0; background-color: inherit;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                        </svg>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>Edit</li>
+                                        <li>Delete</li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    
+                </tbody>
+                
             </table>
 
-            <div class="tbody-wrapper p-0" style="height: 43vh;">
+            <!-- <div class="tbody-wrapper p-0" style="height: 43vh;">
                 <table class="table table-borderless my-0">
                     <tbody>
                         {% for investment in investments %}
@@ -367,73 +417,170 @@
                         
                     </tbody>
                 </table>
-            </div>
+            </div> -->
 
 
                 
         </div>
 
-        <div class="compare-container">
-            <div class="d-flex align-items-center">
-                <div class="col-3">
-                    <h6>Compare Funds</h6>
-                    <p>Detailed comparison on<br>parameters like NAV | Returns |<br>Risk | Rating | Analysis</p>
-                </div>
-                <div class="col-3 d-flex flex-column align-items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#5e66ea" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                    </svg>
-                    <h6>Add a fund</h6>
-                </div>
-                <div class="ccol-3 d-flex flex-column align-items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#5e66ea" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                    </svg>
-                    <h6>Add a fund</h6>
-                </div>
-                <div class="col-3 d-flex flex-column align-items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#5e66ea" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                    </svg>
-                    <h6>Add a fund</h6>
-                </div>
-            </div>
+        <div class="compare-container pt-4">
             <div class="accordion" id="accordionPanelsStayOpenExample">
-                <div class="accordion-item">
+                <div class="d-flex align-items-center accordion-item p-0">
+                    <div class="p-3 col-3">
+                        <h6>Compare Funds</h6>
+                        <p>Detailed comparison on<br>parameters like NAV | Returns |<br>Risk | Rating | Analysis</p>
+                    </div>
+                    <div class="p-3 col-3 d-flex flex-column align-items-center add-fund">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#5e66ea" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                        </svg>
+                        <h6>Add a fund</h6>
+                    </div>
+                    <div class="p-3 col-3 d-flex flex-column align-items-center add-fund">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#5e66ea" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                        </svg>
+                        <h6>Add a fund</h6>
+                    </div>
+                    <div class="p-3 col-3 d-flex flex-column align-items-center add-fund">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#5e66ea" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                        </svg>
+                        <h6>Add a fund</h6>
+                    </div>
+                </div>
+                <div class="accordion-item p-0">
                   <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                      Accordion Item #1
+                    <button class="accordion-button p-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
+                      <h6>Fund Details</h6>
                     </button>
                   </h2>
                   <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
-                    <div class="accordion-body">
-                      <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                    <div class="accordion-body p-0">
+                        <div class="d-flex align-items-center text-center">
+                            <div class="p-1 col-3">
+                                <p>Risk</p>
+                            </div>
+                            <div class="p-1 col-3">
+                                <p>-</p>
+                            </div>
+                            <div class="p-1 col-3">
+                                <p>-</p>
+                            </div>
+                            <div class="p-1 col-3">
+                                <p>-</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center text-center">
+                            <div class="p-1 col-3">
+                                <p>Min SIP Amount</p>
+                            </div>
+                            <div class="p-1 col-3">
+                                <p>-</p>
+                            </div>
+                            <div class="p-1 col-3">
+                                <p>-</p>
+                            </div>
+                            <div class="p-1 col-3">
+                                <p>-</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center text-center">
+                            <div class="p-1 col-3">
+                                <p>Expense Ratio</p>
+                            </div>
+                            <div class="p-1 col-3">
+                                <p>-</p>
+                            </div>
+                            <div class="p-1 col-3">
+                                <p>-</p>
+                            </div>
+                            <div class="p-1 col-3">
+                                <p>-</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center text-center">
+                            <div class="p-1 col-3">
+                                <p>NAV</p>
+                            </div>
+                            <div class="p-1 col-3">
+                                <p>-</p>
+                            </div>
+                            <div class="p-1 col-3">
+                                <p>-</p>
+                            </div>
+                            <div class="p-1 col-3">
+                                <p>-</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center text-center">
+                            <div class="p-1 col-3">
+                                <p>Fund Started</p>
+                            </div>
+                            <div class="p-1 col-3">
+                                <p>-</p>
+                            </div>
+                            <div class="p-1 col-3">
+                                <p>-</p>
+                            </div>
+                            <div class="p-1 col-3">
+                                <p>-</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center text-center">
+                            <div class="p-1 col-3">
+                                <p>Fund Size</p>
+                            </div>
+                            <div class="p-1 col-3">
+                                <p>-</p>
+                            </div>
+                            <div class="p-1 col-3">
+                                <p>-</p>
+                            </div>
+                            <div class="p-1 col-3">
+                                <p>-</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center text-center">
+                            <div class="p-1 col-3">
+                                <p>Exit Load</p>
+                            </div>
+                            <div class="p-1 col-3">
+                                <p>-</p>
+                            </div>
+                            <div class="p-1 col-3">
+                                <p>-</p>
+                            </div>
+                            <div class="p-1 col-3">
+                                <p>-</p>
+                            </div>
+                        </div>
                     </div>
                   </div>
                 </div>
-                <div class="accordion-item">
+                <div class="accordion-item p-0">
                   <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                      Accordion Item #2
+                    <button class="accordion-button p-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                      <h6>Returns</h6>
                     </button>
                   </h2>
                   <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
-                    <div class="accordion-body">
+                    <div class="accordion-body p-0">
                       <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
                     </div>
                   </div>
                 </div>
-                <div class="accordion-item">
+                <div class="accordion-item p-0">
                   <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                      Accordion Item #3
+                    <button class="accordion-button p-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                      <h6>Pros & Cons</h6>
                     </button>
                   </h2>
                   <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
-                    <div class="accordion-body">
+                    <div class="accordion-body p-0">
                       <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
                     </div>
                   </div>
