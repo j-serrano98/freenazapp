@@ -10,33 +10,27 @@
             font-size: 0.8rem;  
         }
 
-        #transactions-container {
-            /* height: 90vh; */
-            overflow-y: scroll;
-            
-
-        }
 
 
-        #transactions {
+        #investments {
             height: 80%;
         }
 
-        #transactions th {
+        #investments th {
             color: rgb(8, 74, 159);
             background-color: rgba(5, 113, 255, 0.082);
         }
         
-        #transactions th:last-child {
+        #investments th:last-child {
             border-radius: 0 17px 17px 0;
         }
 
-        #transactions th:first-child{
+        #investments th:first-child{
             border-radius: 17px 0 0 17px;
             padding-left: 1rem;
         }
 
-        #transactions td.amount-column{
+        #investments td.amount-column{
             text-align: end;
             padding-right: 2rem;
         }
@@ -181,20 +175,25 @@
         .dropdown-toggle::after {
             content: none !important;
         }
+
+        .tbody-wrapper {
+            overflow-y: scroll;
+
+        }
     </style>
     <!-- Modal -->
-    <div class="modal fade" id="transaction-modal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
+    <div class="modal fade" id="investment-modal" tabindex="-1" aria-labelledby="investmentModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="display: flex; justify-content: space-between;">
-                    <h1 class="modal-title fs-5" id="addTransactionModalLabel">Adding a new transaction</h1>
+                    <h1 class="modal-title fs-5" id="addinvestmentModalLabel">Adding a new investment</h1>
                     <button type="button" class="rounded-button" data-bs-dismiss="modal" aria-label="Close">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
                             <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
                         </svg>
                     </button>
                 </div>
-                <div class="modal-body">
+                <!-- <div class="modal-body">
                     <form method="POST">
                         {% csrf_token %}
                         <div class="row" style="display: flex; flex-wrap:wrap; margin-bottom: 10px;">
@@ -257,12 +256,7 @@
                             <button type="submit" class="btn generic-button-fill">Save</button>
                         </div>
                     </form>
-                <!-- <form method="POST">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit">Save</button>
-                </form>  -->
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -270,7 +264,7 @@
 
 
     <div class="ms-4 mt-4" style="margin-right: 2%;">
-        <h2 id="user-greeting">Transactions</h2>
+        <h2 id="user-greeting">Investments</h2>
 
         <div class="auxiliary-buttons">
             <div class="top-left-buttons" style="display: flex; gap: 0.3rem;">
@@ -290,6 +284,12 @@
                     </svg>
                 </button>
             </div>
+            <div class="d-flex align-items-center gap-2">
+                <input type="search" name="" id="">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+            </svg>
+            </div>
             <div class="top-right-buttons" style="display: flex; gap: 0.3rem;">
                 <button class="generic-button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filetype-csv" viewBox="0 0 16 16">
@@ -297,7 +297,7 @@
                     </svg>
                     <span>Export CSV</span>
                 </button>
-                <button id="add-new-transaction" class="generic-button-fill" data-bs-toggle="modal" data-bs-target="#transaction-modal">
+                <button id="add-new-investment" class="generic-button-fill" data-bs-toggle="modal" data-bs-target="#investment-modal">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
                     </svg>
@@ -306,18 +306,21 @@
             </div>
         </div>
     
-        <div class="d-flex row" id="transactions-container">
-            <table class="table mb-0 table-borderless" id="transactions">
-                <thead class="transaction-table-header">
+        <div class="d-flex row" id="investments-container">
+            <table class="table mb-0 table-borderless" id="investments">
+                <thead class="investment-table-header">
                     <tr>
                         <th scope="col" style=" text-align:center; width: 5%;"><input type="checkbox"></th>
-                        <th scope="col" style=" text-align:center; width: 10%;">DATE</th>
-                        <th scope="col" style=" text-align:center; width: 10%;">AMOUNT</th>
-                        <th scope="col" style=" text-align:center; width: 30%;">PAYMENT NAME</th>
-                        <th scope="col" style=" text-align:center; width: 30%;">DESCRIPTION NAME</th>
-                        <th scope="col" style=" text-align:center; width: 10%;">METHOD</th>
-                        <th scope="col" style=" text-align:center; width: 20%;">CATEGORY</th>
-                        <th scope="col" style=" text-align:center; width: 10%;">REF</th>
+                        <th scope="col" style=" text-align:center; width: 25%;">FONDO</th>
+                        <th scope="col" style=" text-align:center; width: 10%;">Curr. SV</th>
+                        <th scope="col" style=" text-align:center; width: 10%;">Prev. SV</th>
+                        <th scope="col" style=" text-align:center; width: 10%;">Fund Value</th>
+                        <th scope="col" style=" text-align:center; width: 5%;">Contributors</th>
+                        <th scope="col" style=" text-align:center; width: 5%;">30d</th>
+                        <th scope="col" style=" text-align:center; width: 5%;">90d</th>
+                        <th scope="col" style=" text-align:center; width: 5%;">180d</th>
+                        <th scope="col" style=" text-align:center; width: 5%;">365d</th>
+                        <th scope="col" style=" text-align:center; width: 10%;">Updated</th>
                         <th scope="col" style=" text-align:center; width: 5%;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
                                 <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
@@ -327,30 +330,24 @@
                 </thead>
             </table>
 
-            <div class="tbody-wrapper p-0" style="height: 80vh;">
+            <div class="tbody-wrapper p-0" style="height: 43vh;">
                 <table class="table table-borderless my-0">
                     <tbody>
-                        {% for transaction in transactions %}
+                        {% for investment in investments %}
                             <tr>
-                                <td scope="row" style=" text-align:center; width: 5%;"><input type="checkbox"></td>
-                                <td scope="row" style=" text-align:center; width: 10%;">{{ transaction.date|date:"m/d/y" }}</td>
-                                {% if transaction.type|title == "Income" %}
-                                    <td class="amount-column" style=" text-align:right; width: 10%;">${{ transaction.amount|floatformat:2|intcomma }}</td>
-                                {% else %}
-                                    <td class="amount-column" style=" text-align:right; width: 10%;">-${{ transaction.amount|floatformat:2|intcomma }}</td>
-                                {% endif %}
-                                <td class="payment-column" style=" text-align:center; width: 30%;">
-                                    <!-- <img src="{% static 'images/youtube-logo.png' %}" alt="youtube-logo"> -->
-                                    {{ transaction.name }}
+                                <th scope="col" style=" text-align:center; width: 5%;"><input type="checkbox"></th>
+                                <td class="payment-column" style=" text-align:center; width: 25%;">
+                                    {{ investment.name }}
                                 </td>
-                                <td class="payment-column" style=" text-align:center; width: 30%;">
-                                    <!-- <img src="{% static 'images/youtube-logo.png' %}" alt="youtube-logo"> -->
-                                    {{ transaction.description }}
-                                </td>
-                                <td style=" text-align:center; width: 10%;">{{ transaction.method }}</td>
-                                <td style=" text-align:center; width: 20%;">{{ transaction.category }}</td>
-                                <!-- <td style=" text-align:center; width: 10%;">{{ transaction.status|title }}</td> -->
-                                <td style=" text-align:center; width: 10%;">{{ transaction.ref }}</td>
+                                <td style=" text-align:center; width: 10%;">RD${{ investment.current_share_value|intcomma }}</td>
+                                <td style=" text-align:center; width: 10%;">RD${{ investment.previous_share_value|intcomma }}</td>
+                                <td style=" text-align:center; width: 10%;">RD${{ investment.fund_value|intcomma }}</td>
+                                <td style=" text-align:center; width: 5%;">{{ investment.number_of_contributors|intcomma }}</td>
+                                <td style=" text-align:center; width: 5%;">{{ investment.return_last_30_days|floatformat:2}}%</td>
+                                <td style=" text-align:center; width: 5%;">{{ investment.return_last_90_days|floatformat:2 }}%</td>
+                                <td style=" text-align:center; width: 5%;">{{ investment.return_last_180_days|floatformat:2 }}%</td>
+                                <td style=" text-align:center; width: 5%;">{{ investment.return_last_365_days|floatformat:2 }}%</td>
+                                <td scope="row" style=" text-align:center; width: 10%;">{{ investment.updated_at|date:"m/d/y" }}</td>
                                 <td style=" text-align:center; width: 5%;">
                                     
                                     <div class="btn-group">
@@ -366,20 +363,49 @@
                                     </div>
                                 </td>
                             </tr>
-                        {% empty %}
-                        <button style="width: 100%; height:100%; justify-content: center; background-color: inherit; border: 0;" data-bs-toggle="modal" data-bs-target="#transaction-modal">
-                            No transanctions. Please add your first transaction
-                        </button>
                         {% endfor %}
                         
                     </tbody>
                 </table>
             </div>
+
+
                 
         </div>
+
+        <div class="compare-container">
+            <div class="d-flex align-items-center">
+                <div class="col-3">
+                    <h6>Compare Funds</h6>
+                    <p>Detailed comparison on<br>parameters like NAV | Returns |<br>Risk | Rating | Analysis</p>
+                </div>
+                <div class="col-3 d-flex flex-column align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#5e66ea" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                    </svg>
+                    <h6>Add a fund</h6>
+                </div>
+                <div class="ccol-3 d-flex flex-column align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#5e66ea" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                    </svg>
+                    <h6>Add a fund</h6>
+                </div>
+                <div class="col-3 d-flex flex-column align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#5e66ea" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                    </svg>
+                    <h6>Add a fund</h6>
+                </div>
+            </div>
+        </div>
+
     </div>
     <script>
-        const addNewTrasactionBtn = document.getElementById("add-new-transaction");
+        const addNewTrasactionBtn = document.getElementById("add-new-investment");
         const typeField = document.getElementById('id_type');
         const categoryField = document.getElementById('id_category');
 

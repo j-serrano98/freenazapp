@@ -375,6 +375,23 @@
       });
     </script>
 
+    {{ monthly_transactions|json_script:"monthly-data" }}
+
+    <script>
+        
+        const expenseData = JSON.parse(document.getElementById('monthly-data').textContent);
+        
+        // console.log(expenseData)
+        
+        labels = []
+        for (let i = 0; i < expenseData.length; i++) {
+
+            console.log(expenseData[i])
+        }
+
+        // console.log(labels)
+    </script>
+
     <script>
         const budgetCtx = document.getElementById('budgetChart').getContext('2d');
 

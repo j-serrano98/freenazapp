@@ -144,7 +144,7 @@ def get_sidebar_items():
             'items': [
                 {
                     'name': 'Comparador de Inversiones',
-                    'url': '#',
+                    'url': reverse('investment:investment'),
                     'data_id': 'transactions',
                     'icon': comparador_inversiones
                 },

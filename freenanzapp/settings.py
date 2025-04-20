@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'apps.shared_accounts',
     'apps.transactions',
     'apps.calculator',
+    'apps.investment',
     'apps.email_parser',
 ]
 

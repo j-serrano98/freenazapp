@@ -2,6 +2,9 @@ from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from apps.transactions.models import Transaction
 from django.db.models import Sum
+from datetime import datetime
+import json
+from django.core.serializers.json import DjangoJSONEncoder
 
 class HomePageView(LoginRequiredMixin, TemplateView):
     template_name = 'core/overview.html'
@@ -11,6 +14,7 @@ class HomePageView(LoginRequiredMixin, TemplateView):
         context =  super().get_context_data(**kwargs)
 
         user = self.request.user
+        now = datetime.now()
 
         # TOTAL INCOMES
         total_incomes = Transaction.objects.filter(user=user).filter(type="INCOME").aggregate(Sum("amount"))["amount__sum"] or 0
@@ -36,5 +40,17 @@ class HomePageView(LoginRequiredMixin, TemplateView):
 
         # LAST TRANSACTIONS
         context['recent_transactions'] = Transaction.objects.filter(user=user).order_by('-date')[:3]
+
+        # TOTAL TRANSACTIONS
+        monthly_qs = Transaction.objects.filter(
+            user=user,
+            date__year=now.year,
+            date__month=now.month
+        ).order_by('-date')
+
+        monthly_data = list(monthly_qs.values('amount', 'category'))
+        context['monthly_transactions'] = json.dumps(monthly_data, cls=DjangoJSONEncoder)
+
+
 
         return context
